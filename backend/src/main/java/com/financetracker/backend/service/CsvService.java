@@ -1,7 +1,9 @@
 package com.financetracker.backend.service;
 
+import com.financetracker.backend.model.Category;
 import com.financetracker.backend.model.Transaction;
 import com.financetracker.backend.model.TransactionType;
+import com.financetracker.backend.repository.CategoryRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,15 @@ import java.util.List;
 @Service
 public class CsvService {
 
+    private final CategoryRepository categoryRepository;
+
+    public CsvService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     public List<Transaction> parse(MultipartFile file) throws IOException {
         List<Transaction> transactions = new ArrayList<>();
+        List<Category> allCategories = categoryRepository.findAll();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
                 CSVReader csvReader = new CSVReader(reader)) {
@@ -32,34 +41,56 @@ public class CsvService {
             }
 
             for (String[] row : rows) {
-                // Expected format: Date, Description, Amount, Type
-                // Adjust based on common bank formats or provide template
+                // Expected format: Date, Description, Amount, Category (optional)
                 if (row.length < 3)
                     continue;
 
                 Transaction t = new Transaction();
-                // Simple parsing logic - robust error handling needed in prod
+
+                // Parse date
                 try {
-                    t.setDate(LocalDate.parse(row[0], DateTimeFormatter.ISO_LOCAL_DATE)); // YYYY-MM-DD
+                    t.setDate(LocalDate.parse(row[0].trim(), DateTimeFormatter.ISO_LOCAL_DATE));
                 } catch (Exception e) {
-                    t.setDate(LocalDate.now()); // Fallback
+                    t.setDate(LocalDate.now());
                 }
 
-                t.setDescription(row[1]);
+                t.setDescription(row[1].trim());
 
+                // Parse amount
                 try {
-                    t.setAmount(new BigDecimal(row[2]));
+                    t.setAmount(new BigDecimal(row[2].trim()));
                 } catch (Exception e) {
                     t.setAmount(BigDecimal.ZERO);
                 }
 
-                // Auto-categorize or set null
                 // Infer type from amount sign
                 if (t.getAmount().compareTo(BigDecimal.ZERO) < 0) {
                     t.setType(TransactionType.EXPENSE);
                     t.setAmount(t.getAmount().abs());
                 } else {
                     t.setType(TransactionType.INCOME);
+                }
+
+                // Parse category from 4th column if present
+                if (row.length >= 4 && row[3] != null && !row[3].trim().isEmpty()) {
+                    String categoryName = row[3].trim();
+                    Category match = allCategories.stream()
+                            .filter(c -> c.getName().equalsIgnoreCase(categoryName))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (match != null) {
+                        t.setCategory(match);
+                    } else {
+                        // Create new category if it doesn't exist
+                        Category newCat = new Category();
+                        newCat.setName(categoryName);
+                        newCat.setType(t.getType());
+                        newCat.setColor("#6366F1");
+                        newCat = categoryRepository.save(newCat);
+                        allCategories.add(newCat);
+                        t.setCategory(newCat);
+                    }
                 }
 
                 transactions.add(t);
