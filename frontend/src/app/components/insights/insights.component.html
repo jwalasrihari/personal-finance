@@ -15,8 +15,7 @@
         <!-- Top Row: Health Score + Category Breakdown -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Health Score Card -->
-            <div
-                class="bg-white shadow-lg rounded-xl p-8 flex flex-col items-center justify-center text-center border border-gray-100">
+            <div class="glass-card p-8 flex flex-col items-center justify-center text-center">
                 <h3 class="text-lg font-semibold text-gray-700 mb-6">Financial Health Score</h3>
                 <div class="relative h-40 w-40 flex items-center justify-center rounded-full border-8 transition-colors duration-500"
                     [ngClass]="{
@@ -41,7 +40,7 @@
             </div>
 
             <!-- Category Breakdown (Doughnut) -->
-            <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+            <div class="glass-card p-6">
                 <h3 class="text-lg font-semibold text-gray-700 mb-4">Spending by Category</h3>
                 <div class="relative" style="height: 300px;">
                     <canvas #categoryChart></canvas>
@@ -50,7 +49,7 @@
         </div>
 
         <!-- Monthly Income vs Expenses (Bar Chart) -->
-        <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+        <div class="glass-card p-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Income vs Expenses</h3>
             <div class="relative" style="height: 350px;">
                 <canvas #monthlyChart></canvas>
@@ -58,7 +57,7 @@
         </div>
 
         <!-- Balance Trend (Line Chart) -->
-        <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+        <div class="glass-card p-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Balance Trend</h3>
             <div class="relative" style="height: 300px;">
                 <canvas #trendChart></canvas>
@@ -66,7 +65,7 @@
         </div>
 
         <!-- Smart Insights -->
-        <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+        <div class="glass-card p-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">💡 Smart Insights</h3>
             <ul class="space-y-3">
                 <li *ngFor="let insight of insights" class="flex items-start">

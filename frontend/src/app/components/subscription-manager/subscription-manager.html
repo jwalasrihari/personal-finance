@@ -1,0 +1,127 @@
+<div class="space-y-6 animate-fade-in">
+    <!-- Header & Stats -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <h2 class="text-3xl font-bold font-display text-gray-900 tracking-tight">Subscriptions</h2>
+            <p class="text-gray-500 mt-1">Manage your recurring bills and scheduled payments</p>
+        </div>
+        <div
+            class="glass-card px-6 py-4 bg-gradient-to-br from-primary-600 to-secondary-700 text-white border-none min-w-[240px]">
+            <p class="text-xs uppercase tracking-widest text-primary-100 font-bold">Estimated Monthly Cost</p>
+            <p class="text-3xl font-bold mt-1">{{ getTotalMonthly() | currency }}</p>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                {{ subscriptions.length }} Total Subscriptions
+            </span>
+        </div>
+        <button (click)="toggleForm()" class="btn-primary flex items-center space-x-2">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>{{ showForm ? 'Cancel' : 'Add Subscription' }}</span>
+        </button>
+    </div>
+
+    <!-- Add Subscription Form -->
+    <div *ngIf="showForm" class="glass-card p-6 border border-primary-100 animate-slide-up bg-primary-50 bg-opacity-30">
+        <h3 class="text-lg font-bold text-gray-900 font-display mb-4">New Subscription</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Name</label>
+                <input type="text" [(ngModel)]="newSubscription.name" placeholder="Netflix, Rent, etc."
+                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Amount</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2 text-gray-400">$</span>
+                    <input type="number" [(ngModel)]="newSubscription.amount"
+                        class="pl-7 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Billing Cycle</label>
+                <select [(ngModel)]="newSubscription.billingCycle"
+                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm appearance-none bg-white">
+                    <option *ngFor="let cycle of billingCycles" [value]="cycle">{{ cycle }}</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Next Payment</label>
+                <input type="date" [(ngModel)]="newSubscription.nextPaymentDate"
+                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+            </div>
+        </div>
+        <div class="mt-4 flex justify-end">
+            <button (click)="saveSubscription()" class="btn-primary px-8">Save Subscription</button>
+        </div>
+    </div>
+
+    <!-- Subscription Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div *ngFor="let sub of subscriptions" class="glass-card card-hover flex flex-col p-0 overflow-hidden group"
+            [ngClass]="{'opacity-60 grayscale-[50%]': !sub.active}">
+
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="h-12 w-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110"
+                            [style.backgroundColor]="sub.category?.color || '#94a3b8'">
+                            <span class="text-lg font-bold">{{ sub.name.charAt(0).toUpperCase() }}</span>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                                {{ sub.name }}</h4>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ sub.billingCycle
+                                }}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-2xl font-bold text-gray-900">{{ sub.amount | currency }}</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Due {{
+                            sub.nextPaymentDate | date:'MMM d' }}</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-gray-50">
+                    <div class="flex items-center space-x-2">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" [checked]="sub.active" (change)="toggleStatus(sub)"
+                                class="sr-only peer">
+                            <div
+                                class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-500">
+                            </div>
+                            <span class="ml-2 text-xs font-bold text-gray-500 uppercase">{{ sub.active ? 'Active' :
+                                'Paused' }}</span>
+                        </label>
+                    </div>
+
+                    <button (click)="deleteSubscription(sub.id)"
+                        class="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-all opacity-0 group-hover:opacity-100">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="subscriptions.length === 0 && !loading"
+            class="md:col-span-2 xl:col-span-3 py-20 text-center glass-card border-dashed border-2 border-gray-200 shadow-none">
+            <svg class="h-16 w-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            <p class="text-xl font-bold text-gray-400">No subscriptions tracked yet</p>
+            <p class="text-gray-400 mt-1">Add your bills to see your monthly commitments</p>
+            <button (click)="toggleForm()" class="mt-6 btn-primary px-8">Add Your First Bill</button>
+        </div>
+    </div>
+</div>

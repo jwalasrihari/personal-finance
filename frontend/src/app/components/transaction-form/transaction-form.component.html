@@ -1,81 +1,113 @@
-<div class="bg-white shadow rounded-lg overflow-hidden max-w-2xl mx-auto">
-    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Add New Transaction</h3>
+<div class="max-w-2xl mx-auto space-y-8 animate-slide-up">
+    <!-- Header -->
+    <div class="text-center">
+        <h2 class="text-3xl font-bold font-display text-gray-900">Add Transaction</h2>
+        <p class="mt-2 text-gray-600">Record a new income or expense entry</p>
     </div>
 
-    <div class="px-4 py-5 sm:p-6">
-        <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <!-- Form Card -->
+    <div class="glass-card overflow-hidden">
+        <div class="px-8 py-8">
+            <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="space-y-6">
 
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                <div class="mt-1">
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
                     <input type="text" id="description" formControlName="description"
-                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                        placeholder="e.g. Grocery shopping"
+                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-shadow">
+                    <p *ngIf="submitted && transactionForm.get('description')?.errors?.['required']"
+                        class="mt-1 text-sm text-red-500">Description is required.</p>
                 </div>
-                <p *ngIf="submitted && transactionForm.get('description')?.errors?.['required']"
-                    class="mt-2 text-sm text-red-600">Description is required.</p>
-            </div>
 
-            <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                <div>
-                    <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm">$</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Amount -->
+                    <div>
+                        <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                        <div class="relative rounded-lg shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 font-medium">$</span>
+                            </div>
+                            <input type="number" id="amount" formControlName="amount" placeholder="0.00"
+                                class="block w-full pl-7 pr-12 rounded-lg border-gray-300 focus:ring-primary-500 focus:border-primary-500 transition-shadow">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-400 text-sm">USD</span>
+                            </div>
                         </div>
-                        <input type="number" id="amount" formControlName="amount" placeholder="0.00"
-                            class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md p-2 border">
+                        <p *ngIf="submitted && transactionForm.get('amount')?.errors?.['required']"
+                            class="mt-1 text-sm text-red-500">Amount is required.</p>
                     </div>
-                    <p *ngIf="submitted && transactionForm.get('amount')?.errors?.['required']"
-                        class="mt-2 text-sm text-red-600">Amount is required.</p>
-                </div>
 
-                <div>
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                    <div class="mt-1">
+                    <!-- Date -->
+                    <div>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                         <input type="date" id="date" formControlName="date"
-                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-shadow">
+                        <p *ngIf="submitted && transactionForm.get('date')?.errors?.['required']"
+                            class="mt-1 text-sm text-red-500">Date is required.</p>
                     </div>
-                    <p *ngIf="submitted && transactionForm.get('date')?.errors?.['required']"
-                        class="mt-2 text-sm text-red-600">Date is required.</p>
                 </div>
-            </div>
 
-            <div>
-                <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
-                <div class="mt-1">
-                    <select id="type" formControlName="type"
-                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
-                        <option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</option>
-                    </select>
+                <!-- Type Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label
+                            class="relative flex items-center justify-center p-4 rounded-lg border cursor-pointer hover:bg-gray-50 transition-colors"
+                            [ngClass]="transactionForm.get('type')?.value === 'INCOME' ? 'border-primary-500 ring-1 ring-primary-500 bg-primary-50' : 'border-gray-200'">
+                            <input type="radio" formControlName="type" value="INCOME" class="sr-only">
+                            <span class="flex items-center text-sm font-medium"
+                                [ngClass]="transactionForm.get('type')?.value === 'INCOME' ? 'text-primary-700' : 'text-gray-900'">
+                                <svg class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                                </svg>
+                                Income
+                            </span>
+                        </label>
+                        <label
+                            class="relative flex items-center justify-center p-4 rounded-lg border cursor-pointer hover:bg-gray-50 transition-colors"
+                            [ngClass]="transactionForm.get('type')?.value === 'EXPENSE' ? 'border-red-500 ring-1 ring-red-500 bg-red-50' : 'border-gray-200'">
+                            <input type="radio" formControlName="type" value="EXPENSE" class="sr-only">
+                            <span class="flex items-center text-sm font-medium"
+                                [ngClass]="transactionForm.get('type')?.value === 'EXPENSE' ? 'text-red-700' : 'text-gray-900'">
+                                <svg class="h-5 w-5 mr-2 text-red-500" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+                                </svg>
+                                Expense
+                            </span>
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                <div class="mt-1">
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
                     <select id="category" formControlName="category"
-                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-shadow">
                         <option [ngValue]="null">Select a category</option>
                         <option *ngFor="let cat of categories" [ngValue]="cat">
                             {{ cat.name }}
                         </option>
                     </select>
+                    <p *ngIf="submitted && transactionForm.get('category')?.errors?.['required']"
+                        class="mt-1 text-sm text-red-500">Category is required.</p>
                 </div>
-                <p *ngIf="submitted && transactionForm.get('category')?.errors?.['required']"
-                    class="mt-2 text-sm text-red-600">Category is required.</p>
-            </div>
 
-            <div class="flex justify-end space-x-3">
-                <a routerLink="/transactions"
-                    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Cancel
-                </a>
-                <button type="submit"
-                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Save
-                </button>
-            </div>
-        </form>
+                <!-- Actions -->
+                <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100">
+                    <a routerLink="/transactions"
+                        class="px-5 py-2.5 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-primary flex items-center px-6 py-2.5">
+                        <span>Save Transaction</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

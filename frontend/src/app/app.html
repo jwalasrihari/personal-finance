@@ -1,45 +1,51 @@
 <div class="min-h-screen bg-gray-50 font-sans text-gray-900">
   <!-- Navbar -->
-  <nav class="bg-white shadow-sm border-b border-gray-200">
+  <nav class="fixed w-full z-50 glass transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex">
           <div class="flex-shrink-0 flex items-center">
-            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            <span class="text-2xl font-bold font-display text-gradient tracking-tight">
               Finance Tracker
             </span>
           </div>
-          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-            <a routerLink="/dashboard" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+          <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+            <a routerLink="/dashboard" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Dashboard
             </a>
-            <a routerLink="/transactions" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+            <a routerLink="/transactions" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Transactions
             </a>
-            <a routerLink="/budgets" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+            <a routerLink="/budgets" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Budgets
             </a>
-            <a routerLink="/categories" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+            <a routerLink="/categories" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Categories
             </a>
-            <a routerLink="/goals" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+            <a routerLink="/goals" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Goals
             </a>
-            <a routerLink="/insights" routerLinkActive="border-indigo-500 text-gray-900"
-              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+            <a routerLink="/insights" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
               Reports
+            </a>
+            <a routerLink="/subscriptions" routerLinkActive="border-primary-500 text-primary-600"
+              class="border-transparent text-gray-500 hover:text-primary-600 hover:border-primary-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+              Subscriptions
             </a>
           </div>
         </div>
         <div class="flex items-center">
-          <button routerLink="/transactions/new"
-            class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm transition-colors duration-200">
-            + Add New
+          <button routerLink="/transactions/new" class="btn-primary flex items-center space-x-2">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Add New</span>
           </button>
         </div>
       </div>
@@ -47,7 +53,7 @@
   </nav>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 pt-24 animate-fade-in">
     <router-outlet></router-outlet>
   </main>
 </div>

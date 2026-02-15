@@ -2,5 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+body {
+    @apply font-sans text-gray-900 bg-gray-50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply font-display;
+}
+
+/* Custom Utility Classes */
+@layer utilities {
+    .glass {
+        @apply bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 shadow-lg;
+    }
+
+    .glass-card {
+        @apply bg-white bg-opacity-80 backdrop-filter backdrop-blur-md border border-gray-100 shadow-xl rounded-2xl;
+    }
+
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600;
+    }
+
+    .btn-primary {
+        @apply bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+    }
+
+    .card-hover {
+        @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+}

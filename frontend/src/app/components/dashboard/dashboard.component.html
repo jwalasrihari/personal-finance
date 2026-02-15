@@ -1,108 +1,139 @@
-<div class="space-y-6">
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <!-- Balance -->
-        <div class="bg-white overflow-hidden shadow rounded-lg transform transition duration-500 hover:scale-105">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
-                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-5 w-0 flex-1">
-                        <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Balance</dt>
-                            <dd class="text-3xl font-semibold text-gray-900">{{ totalBalance | currency }}</dd>
-                        </dl>
-                    </div>
-                </div>
+<div class="p-6 space-y-8 animate-fade-in">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+        <div>
+            <h2 class="text-3xl font-bold font-display text-gray-900 tracking-tight">Overview</h2>
+            <p class="text-gray-500 mt-1">Track your financial health and activity</p>
+        </div>
+        <div class="hidden sm:block">
+            <span
+                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-100">
+                <span class="h-2 w-2 rounded-full bg-primary-500 mr-2 animate-pulse"></span>
+                Live Updates Active
+            </span>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Balance Card -->
+        <div
+            class="glass-card p-6 card-hover relative overflow-hidden group bg-gradient-to-br from-primary-600 to-secondary-700 text-white border-none shadow-primary-200">
+            <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-30 transition-opacity">
+                <svg class="h-32 w-32 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M2 20h20v-2H2v2zm2-3h2v2H4v-2zm-2-5h20v-2H2v2zm2-3h2v2H4V9zm-2-5h20V2H2v2zm2-3h2v2H4V4z" />
+                </svg>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <div class="text-sm">
-                    <a routerLink="/transactions" class="font-medium text-indigo-600 hover:text-indigo-500">View all</a>
-                </div>
+            <h3 class="text-sm font-medium text-primary-100 uppercase tracking-wider">Total Balance</h3>
+            <p class="mt-2 text-4xl font-bold text-white">{{ totalBalance | currency }}</p>
+            <div
+                class="mt-4 flex items-center text-sm text-blue-100 bg-white bg-opacity-20 w-max px-3 py-1 rounded-full backdrop-filter backdrop-blur-sm">
+                <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Wallet health: Optimal</span>
             </div>
         </div>
 
-        <!-- Income -->
-        <div class="bg-white overflow-hidden shadow rounded-lg transform transition duration-500 hover:scale-105">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
-                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                        </svg>
-                    </div>
-                    <div class="ml-5 w-0 flex-1">
-                        <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Income</dt>
-                            <dd class="text-3xl font-semibold text-gray-900">{{ totalIncome | currency }}</dd>
-                        </dl>
-                    </div>
-                </div>
+        <!-- Income Card -->
+        <div class="glass-card p-6 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <svg class="h-24 w-24 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.15-1.46-3.27-3.4h1.96c.1 1.05 1.18 1.91 2.53 1.91 1.24 0 2.22-.73 2.22-1.89 0-1.07-.93-1.63-2.63-2.09-2.2-.6-4.22-1.53-4.22-4.13 0-2.01 1.58-3.4 3.41-3.76V2.5h2.67v1.86c1.47.33 2.65 1.2 3.01 2.87h-1.92c-.22-.92-1.02-1.55-2.1-1.55-1.22 0-2.12.67-2.12 1.76 0 1.18 1.1 1.63 2.76 2.06 2.3.61 4.1 1.69 4.1 4.09 0 2.15-1.68 3.51-3.32 3.8z" />
+                </svg>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Income</h3>
+            <p class="mt-2 text-3xl font-bold text-green-600">{{ totalIncome | currency }}</p>
+            <div class="mt-4 flex items-center text-sm text-green-600 bg-green-50 w-max px-2 py-1 rounded-full">
+                <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span>Up from last month</span>
             </div>
         </div>
 
-        <!-- Expense -->
-        <div class="bg-white overflow-hidden shadow rounded-lg transform transition duration-500 hover:scale-105">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 bg-red-500 rounded-md p-3">
-                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                        </svg>
-                    </div>
-                    <div class="ml-5 w-0 flex-1">
-                        <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Expenses</dt>
-                            <dd class="text-3xl font-semibold text-gray-900">{{ totalExpense | currency }}</dd>
-                        </dl>
-                    </div>
-                </div>
+        <!-- Expense Card -->
+        <div class="glass-card p-6 card-hover relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <svg class="h-24 w-24 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+                </svg>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Expenses</h3>
+            <p class="mt-2 text-3xl font-bold text-red-500">{{ totalExpense | currency }}</p>
+            <div class="mt-4 flex items-center text-sm text-red-600 bg-red-50 w-max px-2 py-1 rounded-full">
+                <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                </svg>
+                <span>Stable spending</span>
             </div>
         </div>
     </div>
 
-    <!-- Recent Transactions -->
-    <div class="bg-white shadow rounded-lg">
-        <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Transactions</h3>
+    <!-- Main Section: Transactions List -->
+    <div class="glass-card overflow-hidden border border-gray-100 shadow-xl">
+        <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 bg-opacity-30">
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 font-display">Recent Activity</h3>
+                <p class="text-sm text-gray-500">Your last few transactions</p>
+            </div>
+            <a routerLink="/transactions"
+                class="text-primary-600 hover:text-primary-700 text-sm font-semibold flex items-center group transition-all">
+                View Full History
+                <svg class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
         </div>
-        <ul class="divide-y divide-gray-200">
-            <li *ngFor="let t of recentTransactions"
-                class="px-4 py-4 sm:px-6 hover:bg-gray-50 transition duration-150 ease-in-out">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center"
-                            [ngClass]="{'bg-green-100 text-green-600': t.type === 'INCOME', 'bg-red-100 text-red-600': t.type === 'EXPENSE'}">
-                            <span class="text-lg font-bold">{{ t.type === 'INCOME' ? '+' : '-' }}</span>
-                        </div>
-                        <div class="ml-4">
-                            <div class="text-sm font-medium text-gray-900">{{ t.description }}</div>
-                            <div class="text-sm text-gray-500">{{ t.category?.name || 'Uncategorized' }}</div>
-                        </div>
+
+        <div class="divide-y divide-gray-100">
+            <div *ngFor="let t of recentTransactions"
+                class="px-8 py-5 hover:bg-primary-50 hover:bg-opacity-40 transition-all duration-200 group flex justify-between items-center">
+                <div class="flex items-center space-x-5">
+                    <!-- Icon Container -->
+                    <div class="h-12 w-12 rounded-2xl flex items-center justify-center text-white shadow-lg transform transition-transform group-hover:scale-110 group-hover:rotate-3"
+                        [style.backgroundColor]="t.category?.color || '#94a3b8'">
+                        <span class="text-lg font-bold">{{ (t.category?.name?.charAt(0) || '?').toUpperCase() }}</span>
                     </div>
-                    <div class="flex flex-col items-end">
-                        <div class="text-sm font-semibold"
-                            [ngClass]="{'text-green-600': t.type === 'INCOME', 'text-red-600': t.type === 'EXPENSE'}">
-                            {{ t.type === 'INCOME' ? '+' : '-' }}{{ t.amount | currency }}
+
+                    <div>
+                        <p class="text-base font-semibold text-gray-900 leading-tight">{{ t.description }}</p>
+                        <div class="flex items-center mt-1 text-sm text-gray-500">
+                            <span class="font-medium text-gray-600">{{ t.category?.name || 'Uncategorized' }}</span>
+                            <span class="mx-2 text-gray-300">•</span>
+                            <span>{{ t.date | date:'MMM d, y' }}</span>
                         </div>
-                        <div class="text-xs text-gray-500">{{ t.date | date }}</div>
                     </div>
                 </div>
-            </li>
-            <li *ngIf="recentTransactions.length === 0" class="px-4 py-8 text-center text-gray-500">
-                No recent transactions found. Start by adding one!
-            </li>
-        </ul>
-        <div class="bg-gray-50 px-4 py-4 sm:px-6 rounded-b-lg">
-            <div class="text-sm">
-                <a routerLink="/transactions" class="font-medium text-indigo-600 hover:text-indigo-500">View full
-                    history</a>
+
+                <div class="flex flex-col items-end">
+                    <span class="text-lg font-bold tracking-tight"
+                        [ngClass]="t.type === 'INCOME' ? 'text-green-600' : 'text-red-500'">
+                        {{ t.type === 'INCOME' ? '+' : '-' }}{{ t.amount | currency }}
+                    </span>
+                    <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">
+                        {{ t.type }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="recentTransactions.length === 0" class="px-8 py-16 text-center">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-50 mb-4">
+                    <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                </div>
+                <p class="text-gray-900 font-semibold italic">No activity recorded yet</p>
+                <button routerLink="/transactions/new" class="mt-4 text-primary-600 font-bold hover:underline">Start by
+                    adding your first transaction</button>
             </div>
         </div>
     </div>
