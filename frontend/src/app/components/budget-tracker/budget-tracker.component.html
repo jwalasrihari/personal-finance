@@ -1,0 +1,73 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-900">Budget Tracking</h2>
+        <button (click)="toggleForm()" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+            {{ showForm ? 'Cancel' : '+ New Budget' }}
+        </button>
+    </div>
+
+    <!-- Budget Form -->
+    <div *ngIf="showForm" class="bg-white shadow rounded-lg p-6">
+        <form [formGroup]="budgetForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Category</label>
+                    <select formControlName="category"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                        <option [ngValue]="null">Select Category</option>
+                        <option *ngFor="let cat of categories" [ngValue]="cat">{{ cat.name }}</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Limit Amount</label>
+                    <input type="number" formControlName="amount"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Start Date</label>
+                    <input type="date" formControlName="startDate"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">End Date</label>
+                    <input type="date" formControlName="endDate"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                </div>
+            </div>
+            <button type="submit" [disabled]="budgetForm.invalid"
+                class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:opacity-50">
+                Save Budget
+            </button>
+        </form>
+    </div>
+
+    <!-- Budget List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div *ngFor="let budget of budgets" class="bg-white shadow rounded-lg p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-medium text-gray-900">{{ budget.category?.name }} Budget</h3>
+                <button (click)="deleteBudget(budget.id)" class="text-red-500 hover:text-red-700">&times;</button>
+            </div>
+
+            <div class="mb-2 flex justify-between text-sm text-gray-600">
+                <span>Spent: {{ getSpentAmount(budget) | currency }}</span>
+                <span>Limit: {{ budget.amount | currency }}</span>
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
+                    [style.width.%]="getProgress(budget)"
+                    [ngClass]="{'bg-red-500': getProgress(budget) > 100, 'bg-yellow-500': getProgress(budget) > 80 && getProgress(budget) <= 100}">
+                </div>
+            </div>
+
+            <div class="mt-2 text-xs text-gray-500">
+                {{ budget.startDate | date }} - {{ budget.endDate | date }}
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="budgets.length === 0" class="text-center text-gray-500 py-10">
+        No active budgets. Create one to start tracking!
+    </div>
+</div>

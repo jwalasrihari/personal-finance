@@ -1,0 +1,41 @@
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold text-gray-900">Financial Insights</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Health Score Card -->
+        <div class="bg-white shadow rounded-lg p-6 flex flex-col items-center justify-center text-center">
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Financial Health Score</h3>
+            <div class="relative h-40 w-40 flex items-center justify-center rounded-full border-8" [ngClass]="{
+                'border-green-500': healthScore >= 80,
+                'border-indigo-500': healthScore >= 60 && healthScore < 80,
+                'border-yellow-500': healthScore >= 40 && healthScore < 60,
+                'border-red-500': healthScore < 40
+            }">
+                <span class="text-4xl font-bold text-gray-900">{{ healthScore }}</span>
+            </div>
+            <p class="mt-4 text-sm text-gray-500">
+                {{ healthScore >= 80 ? 'Excellent! Keep it up.' :
+                healthScore >= 60 ? 'Good, but room for improvement.' :
+                'Needs attention.' }}
+            </p>
+        </div>
+
+        <!-- Insights List -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Smart Insights</h3>
+            <ul class="space-y-3">
+                <li *ngFor="let insight of insights" class="flex items-start">
+                    <svg class="h-6 w-6 text-indigo-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-gray-600">{{ insight }}</span>
+                </li>
+                <li *ngIf="insights.length === 0" class="text-gray-500 italic">
+                    No specific insights yet. Add more data!
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

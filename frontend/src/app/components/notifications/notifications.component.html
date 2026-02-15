@@ -1,0 +1,21 @@
+<div class="bg-white shadow rounded-lg overflow-hidden max-w-2xl mx-auto">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Notifications</h3>
+    </div>
+    <ul class="divide-y divide-gray-200">
+        <li *ngFor="let n of notifications"
+            class="px-4 py-4 sm:px-6 hover:bg-gray-50 flex justify-between items-center">
+            <div class="flex-1 pr-4">
+                <p class="text-sm font-medium text-gray-900">{{ n.message }}</p>
+                <p class="text-xs text-gray-500 mt-1">{{ n.date | date:'short' }}</p>
+            </div>
+            <button (click)="markAsRead(n.id)"
+                class="text-xs text-indigo-600 hover:text-indigo-900 border border-indigo-200 rounded px-2 py-1">
+                Mark as Read
+            </button>
+        </li>
+        <li *ngIf="notifications.length === 0" class="px-4 py-8 text-center text-gray-500">
+            No new notifications.
+        </li>
+    </ul>
+</div>

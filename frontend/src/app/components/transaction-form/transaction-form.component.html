@@ -1,0 +1,81 @@
+<div class="bg-white shadow rounded-lg overflow-hidden max-w-2xl mx-auto">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Add New Transaction</h3>
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+        <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <div class="mt-1">
+                    <input type="text" id="description" formControlName="description"
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                </div>
+                <p *ngIf="submitted && transactionForm.get('description')?.errors?.['required']"
+                    class="mt-2 text-sm text-red-600">Description is required.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                <div>
+                    <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input type="number" id="amount" formControlName="amount" placeholder="0.00"
+                            class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md p-2 border">
+                    </div>
+                    <p *ngIf="submitted && transactionForm.get('amount')?.errors?.['required']"
+                        class="mt-2 text-sm text-red-600">Amount is required.</p>
+                </div>
+
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <div class="mt-1">
+                        <input type="date" id="date" formControlName="date"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                    </div>
+                    <p *ngIf="submitted && transactionForm.get('date')?.errors?.['required']"
+                        class="mt-2 text-sm text-red-600">Date is required.</p>
+                </div>
+            </div>
+
+            <div>
+                <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
+                <div class="mt-1">
+                    <select id="type" formControlName="type"
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                        <option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                <div class="mt-1">
+                    <select id="category" formControlName="category"
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                        <option [ngValue]="null">Select a category</option>
+                        <option *ngFor="let cat of categories" [ngValue]="cat">
+                            {{ cat.name }}
+                        </option>
+                    </select>
+                </div>
+                <p *ngIf="submitted && transactionForm.get('category')?.errors?.['required']"
+                    class="mt-2 text-sm text-red-600">Category is required.</p>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <a routerLink="/transactions"
+                    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Cancel
+                </a>
+                <button type="submit"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

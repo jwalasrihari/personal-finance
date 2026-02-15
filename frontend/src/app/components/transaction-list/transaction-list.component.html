@@ -1,0 +1,73 @@
+<div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Transaction History</h3>
+            <div class="flex space-x-2">
+                <input type="text" placeholder="Search transactions..." (input)="onSearch($event)"
+                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                <a routerLink="/transactions/new"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Add Transaction
+                </a>
+            </div>
+        </div>
+
+        <div class="py-2 flex items-center space-x-4">
+            <span class="text-sm font-medium text-gray-700">Import CSV:</span>
+            <input type="file" (change)="onFileSelected($event)"
+                class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Description</th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let t of filteredTransactions" class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ t.date | date:'mediumDate' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ t.description }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
+                            [style.background-color]="t.category?.color || '#9CA3AF'">
+                            {{ t.category?.name || 'Uncategorized' }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold"
+                        [ngClass]="{'text-green-600': t.type === 'INCOME', 'text-red-600': t.type === 'EXPENSE'}">
+                        {{ t.type === 'INCOME' ? '+' : '-' }}{{ t.amount | currency }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button (click)="deleteTransaction(t.id)"
+                            class="text-red-600 hover:text-red-900">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredTransactions.length === 0">
+                    <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                        No transactions found.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
