@@ -6,6 +6,7 @@ import { BudgetTrackerComponent } from './components/budget-tracker/budget-track
 import { GoalTrackerComponent } from './components/goal-tracker/goal-tracker.component';
 import { InsightsComponent } from './components/insights/insights.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { CategoryManagerComponent } from './components/category-manager/category-manager.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'budgets', component: BudgetTrackerComponent },
   { path: 'goals', component: GoalTrackerComponent },
   { path: 'insights', component: InsightsComponent },
+  { path: 'categories', component: CategoryManagerComponent },
   { path: 'notifications', component: NotificationsComponent },
 ];
