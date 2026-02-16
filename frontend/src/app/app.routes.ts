@@ -19,5 +19,5 @@ export const routes: Routes = [
   { path: 'insights', component: InsightsComponent },
   { path: 'categories', component: CategoryManagerComponent },
   { path: 'subscriptions', component: SubscriptionManagerComponent },
-  { path: 'notifications', component: NotificationsComponent },
+  { path: 'notifications', component: NotificationsComponent }
 ];
